@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 class CategoriesController extends Controller
 {
-    // use GeneralTrait;
+    use GeneralTrait;
    public function index(){
 
      $categories = Category::select()->get();
@@ -16,6 +16,12 @@ class CategoriesController extends Controller
    public function getCategoryById(Request $request){
 
     $category = Category::find($request->id);
-    return response()->json($category);
+
+    if(!$category){
+
+       return  $this->returnError('001','this category not found!');
+    }
+    return $this->returnData('category',$category,'success request');
+    // return response()->json($category);
    }
 }
