@@ -11,7 +11,8 @@ class CategoriesController extends Controller
 
      $categories = Category::select()->get();
 
-     return response()->json($categories);
+    //  return response()->json($categories);
+    return $this->returnData('categories',$categories,'success');
    }
    public function getCategoryById(Request $request){
 
@@ -23,5 +24,19 @@ class CategoriesController extends Controller
     }
     return $this->returnData('category',$category,'success request');
     // return response()->json($category);
+   }
+
+   public function changeCategoryStatus(Request $request){
+
+
+
+    $category=Category::where('id',$request->id)->update(['active'=>$request->active]);
+    if(!$category){
+    return $this->returnError(400,'Update not success');
+
+    }
+
+    return $this->returnSuccessMessage('update successfully!');
+
    }
 }

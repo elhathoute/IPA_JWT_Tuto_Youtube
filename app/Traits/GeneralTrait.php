@@ -31,9 +31,29 @@ trait GeneralTrait
         ]);
     }
 
-    // public function returnValidationError($code="E001",$validator){
+    public function returnValidationError($code="E001",$validator){
+    return $this->returnError($code,$validator->errors()->first());
+    }
+    public function returnCodeAccordingToInput($validator){
+        $inputs=array_keys($validator->errors()->toArray());
+        $code=$this->getErrorCode($inputs[0]);
+        return $code;
+    }
 
-    // }
+    public function getErrorCode($input){
+        if($input=="name"){
+            return 'E001';
+        } else if($input=="password"){
+            return 'E002';
+        }
+        else if($input=="mobile"){
+            return 'E003';
+        }
+
+        else{
+            return "";
+        }
+    }
 
 }
 
