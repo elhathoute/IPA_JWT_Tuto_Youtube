@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 class CategoriesController extends Controller
 {
-    use GeneralTrait;
+    // use GeneralTrait;
    public function index(){
 
      $categories = Category::select()->get();
