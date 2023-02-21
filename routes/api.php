@@ -2,9 +2,10 @@
 
 use App\Models\myTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriesController;
 
 // Route::post('/myPage',function(){
 
@@ -33,13 +34,30 @@ Route::group(['middleware'=>['api','checkPassword','changeLanguage']],function()
 });
 
 Route::group(['prefix'=>'admin'],function(){
+
     Route::post('/login',[AuthController::class,'login']);
+    // logout if token exist
+    Route::post('/logout',[AuthController::class,'logout'])->middleware('auth.guard:admin-api');
+});
+
+// login user
+Route::group(['prefix'=>'user'],function(){
+
+    Route::post('/login',[AuthController::class,'UserLogin']);
 
 });
 
+
+// user
+Route::group(['prefix'=>'user','middleware'=>'auth.guard:user-api'],function(){
+
+    Route::post('/profil',function(){
+        return Auth::user(); //return auth of user
+    });
+
+});
 Route::group(['middleware'=>['api','checkPassword','changeLanguage','checkAdminToken:admin-api']],function(){
 
 Route::get('/offers',[CategoriesController::class,'index']);
 
 });
-

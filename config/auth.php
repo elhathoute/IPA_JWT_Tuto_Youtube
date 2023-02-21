@@ -48,11 +48,11 @@ return [
 
         ],
 
-        // 'user-api'=>[
-        //     'driver'=>'jwt',
-        //     'provider' => 'users',
+        'user-api'=>[
+            'driver'=>'jwt',
+            'provider' => 'users',
 
-        // ],
+        ],
 
         'admin-api'=>[
             'driver'=>'jwt',
